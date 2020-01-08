@@ -1,7 +1,5 @@
 <template>
-    <div>
-        <el-button type="info" @click="exit">退出</el-button>
-    </div>
+    <el-button type="info" @click="exit">退出</el-button>
 </template>
 
 <script>
@@ -14,7 +12,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-
-</style>

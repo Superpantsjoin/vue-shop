@@ -48,7 +48,7 @@ export default {
             this.$refs.loginFormRef.resetFields();
         },
         login(){
-            // validate 表单验证api
+            // validate 表单验证方法
             this.$refs.loginFormRef.validate(async flag => {
                 if(!flag) return;
                 const resp = await this.$http.post("login", this.loginForm);
@@ -60,7 +60,7 @@ export default {
                     // 令牌保存
                     window.sessionStorage.setItem("token", resp.data.data.token);
                     // 页面跳转
-                    this.$router.push("/home");
+                    this.$router.push('/home');
                 }
             });
         }
