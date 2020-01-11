@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import './assets/css/global.css' // 全局样式表
 import './plugins/element.js' // element组件
+import 'element-ui/lib/theme-chalk/index.css' // element组件样式
 import './assets/fonts/iconfont.css' // 阿里字体图标
 import axios from 'axios'
 
