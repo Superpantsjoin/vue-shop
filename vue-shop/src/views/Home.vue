@@ -6,7 +6,7 @@
         </el-header>
         <el-container>
             <el-aside width="200px">
-                Aside1
+                <left></left>
             </el-aside>
             <el-main>
                 Main
@@ -18,9 +18,11 @@
 
 <script>
 import top from '../components/Top.vue'
+import left from '../components/Left.vue'
 export default {
     components: {
-        top
+        top,
+        left
     },
     methods: {
         exit() {
