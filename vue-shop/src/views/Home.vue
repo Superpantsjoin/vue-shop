@@ -5,21 +5,26 @@
             <el-button type="info" @click="exit">退出</el-button>
         </el-header>
         <el-container>
-            <el-aside width="200px">
-                <left></left>
+            <el-aside :width="widthShow">
+                <left @getWidth="getValue"></left>
             </el-aside>
             <el-main>
-                Main
+                <router-view/>
             </el-main>
         </el-container>
     </el-container>
-    
 </template>
 
 <script>
 import top from '../components/Top.vue'
 import left from '../components/Left.vue'
+import welcome from '../components/Welcome.vue'
 export default {
+    data(){
+        return {
+            widthShow: '200px'
+        }
+    },
     components: {
         top,
         left
@@ -28,6 +33,9 @@ export default {
         exit() {
             window.sessionStorage.clear();
             this.$router.push('/login');
+        },
+        getValue(value){
+            this.widthShow = value;
         }
     }
 };
@@ -62,9 +70,9 @@ export default {
         margin: auto;
     }
     .el-aside{
-        background-color: #333744;
+        background-color: #2b2c2e;
     }
     .el-main{
         background-color: #eaedf1;
     }
-</style>zz
+</style>

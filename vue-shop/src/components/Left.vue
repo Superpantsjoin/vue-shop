@@ -1,51 +1,87 @@
 <template>
-    <el-menu
+    <div>
+        <div class="toggle-button" @click="toggleMenu">|||</div>
+        <el-menu
         default-active="2"
         class="el-menu-vertical-demo"
-        background-color="#333744"
+        background-color="#2b2c2e"
         text-color="#fff"
-        active-text-color="#ffd04b">
-        <el-submenu index="1">
-            <template slot="title">
-            <i class="el-icon-location"></i>
-            <span>导航一</span>
-            </template>
-            <el-menu-item-group>
-            <template slot="title">分组一</template>
-            <el-menu-item index="1-1">选项1</el-menu-item>
-            <el-menu-item index="1-2">选项2</el-menu-item>
-            </el-menu-item-group>
-            <el-menu-item-group title="分组2">
-            <el-menu-item index="1-3">选项3</el-menu-item>
-            </el-menu-item-group>
-            <el-submenu index="1-4">
-            <template slot="title">选项4</template>
-            <el-menu-item index="1-4-1">选项1</el-menu-item>
+        :unique-opened="true"
+        :router="true"
+        :collapse="isDisplay"
+        :collapse-transition="false"
+        active-text-color="#409eff">
+            <el-submenu :index="item.id + ''" v-for="item in menuList" :key="item.id">
+                <template slot="title">
+                    <i :class="iconObj[item.order]"></i>
+                    <span>{{ item.authName }}</span>
+                </template>
+                <el-menu-item :index="subItem.path" v-for="subItem in item.children" :key="subItem.id">
+                    <template slot="title">
+                    <i class="el-icon-menu"></i>
+                    <span>{{ subItem.authName }}</span>
+                    </template>
+                </el-menu-item>
             </el-submenu>
-        </el-submenu>
-        <el-menu-item index="2">
-            <i class="el-icon-menu"></i>
-            <span slot="title">导航二</span>
-        </el-menu-item>
-        <el-menu-item index="3" disabled>
-            <i class="el-icon-document"></i>
-            <span slot="title">导航三</span>
-        </el-menu-item>
-        <el-menu-item index="4">
-            <i class="el-icon-setting"></i>
-            <span slot="title">导航四</span>
-        </el-menu-item>
         </el-menu>
+    </div>
 </template>
 
 <script>
 export default {
     name: 'left',
+    data(){
+        return {
+            menuList: [],
+            // 一级菜单icon
+            iconObj: {
+                '1': 'iconfont icon-user',
+                '2': 'iconfont icon-tijikongjian',
+                '3': 'iconfont icon-shangpin',
+                '4': 'iconfont icon-danju',
+                '5': 'iconfont icon-baobiao'
+            },
+            isDisplay: false
+        }
+    },
+    created(){
+        this.getMenuList();
+    },
+    methods: {
+        // 获取菜单列表
+        async getMenuList(){
+            const resp =  await this.$http.get('/menus');
+            if(resp.data.meta.status !== 200) return this.$message.error(resp.data.meta.msg);
+            this.menuList = resp.data.data;
+        },
+        // 切换菜单状态
+        toggleMenu(){
+            // document.getElementsByClassName('iconfont')[0].setAttribute('style', 'display:none');
+            if(this.isDisplay){
+                this.$emit('getWidth', '200px');  
+            }else{
+                this.$emit('getWidth', '64px');
+            }
+            this.isDisplay = !this.isDisplay;
+        }
+    }
 }
 </script>
 
 <style scoped>
     .el-menu{
         border-right: 0;
+    }
+    .iconfont{
+        margin-right: 10px;
+    }
+    .toggle-button{
+        font-size: 10px;
+        color: #fff;
+        background-color: rgb(70, 71, 71);
+        text-align: center;
+        line-height: 24px;
+        letter-spacing: .2em;
+        cursor: pointer;
     }
 </style>
