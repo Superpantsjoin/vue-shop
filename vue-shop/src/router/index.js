@@ -21,6 +21,46 @@ const routes = [
         path: 'welcome',
         name: 'welcome',
         component: () => import('../components/Welcome.vue')
+      },
+      {
+        path: 'users',
+        name: 'users',
+        component: () => import('../components/Users.vue')
+      },
+      {
+        path: 'roles',
+        name: 'roles',
+        component: () => import('../components/Roles.vue')
+      },
+      {
+        path: 'rights',
+        name: 'rights',
+        component: () => import('../components/Rights.vue')
+      },
+      {
+        path: 'goods',
+        name: 'goods',
+        component: () => import('../components/Goods.vue')
+      },
+      {
+        path: 'params',
+        name: 'params',
+        component: () => import('../components/Params.vue')
+      },
+      {
+        path: 'categories',
+        name: 'categories',
+        component: () => import('../components/Categories.vue')
+      },
+      {
+        path: 'orders',
+        name: 'orders',
+        component: () => import('../components/Orders.vue')
+      },
+      {
+        path: 'reports',
+        name: 'reports',
+        component: () => import('../components/Reports.vue')
       }
     ],
     redirect: '/home/welcome'

@@ -1,10 +1,10 @@
 <template>
-    <h3>欢迎使用</h3>
+    <h3>分类参数组件</h3>
 </template>
 
 <script>
 export default {
-    name: 'welcome'
+    name: 'params'
 }
 </script>
 

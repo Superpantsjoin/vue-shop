@@ -2,7 +2,6 @@
     <div>
         <div class="toggle-button" @click="toggleMenu">|||</div>
         <el-menu
-        default-active="2"
         class="el-menu-vertical-demo"
         background-color="#2b2c2e"
         text-color="#fff"
@@ -56,7 +55,6 @@ export default {
         },
         // 切换菜单状态
         toggleMenu(){
-            // document.getElementsByClassName('iconfont')[0].setAttribute('style', 'display:none');
             if(this.isDisplay){
                 this.$emit('getWidth', '200px');  
             }else{
@@ -78,10 +76,13 @@ export default {
     .toggle-button{
         font-size: 10px;
         color: #fff;
-        background-color: rgb(70, 71, 71);
+        background-color: rgb(56, 56, 56);
         text-align: center;
         line-height: 24px;
         letter-spacing: .2em;
         cursor: pointer;
+    }
+    .toggle-button:hover{
+        background-color: rgb(85, 87, 87);
     }
 </style>
