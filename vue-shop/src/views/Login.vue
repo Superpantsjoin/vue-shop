@@ -52,9 +52,9 @@ export default {
             this.$refs.loginFormRef.validate(async flag => {
                 if(!flag) return;
                 const resp = await this.$http.post("login", this.loginForm);
-                if(resp.data.meta.status != 200){
+                if(resp.data.meta.status !== 200){
                     this.$refs.loginFormRef.resetFields();
-                    return this.$message.error("账号或密码错误");
+                    return this.$message.error(resp.data.meta.msg);
                 }else{
                     this.$message.success("登录成功");
                     // 令牌保存

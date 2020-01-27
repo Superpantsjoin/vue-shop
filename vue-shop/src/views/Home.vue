@@ -19,6 +19,7 @@
 import top from '../components/Top.vue'
 import left from '../components/Left.vue'
 import welcome from '../components/Welcome.vue'
+
 export default {
     data(){
         return {
