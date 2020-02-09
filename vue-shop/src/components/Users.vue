@@ -65,34 +65,13 @@
         </el-card>
 
         <!-- 添加用户对话框 -->
-        <el-dialog
-            title="添加用户"
-            :visible.sync="addDialog"
-            @close="closeDialog"
-            width="30%">
-            <el-form :model="addUserObj" :rules="addUserRules" ref="addUserForm" label-width="70px">
-                <el-form-item label="用户名" prop="username">
-                    <el-input v-model="addUserObj.username"></el-input>
-                </el-form-item>
-                <el-form-item label="密码" prop="password">
-                    <el-input v-model="addUserObj.password"></el-input>
-                </el-form-item>
-                <el-form-item label="邮箱" prop="email">
-                    <el-input v-model="addUserObj.email"></el-input>
-                </el-form-item>
-                <el-form-item label="电话" prop="phone">
-                    <el-input v-model="addUserObj.phone"></el-input>
-                </el-form-item>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="addDialog = false">取 消</el-button>
-                <el-button type="primary" @click="addUser">确 定</el-button>
-            </span>
-        </el-dialog>
+        <addDialog :show.sync="addDialog" @event="getUserList"></addDialog>
     </div>
 </template>
 
 <script>
+import addDialog from './AddDialog.vue'
+
 export default {
     name: 'users',
     data() {
@@ -105,28 +84,6 @@ export default {
             total: 0,
             userList: [],
             addDialog: false,
-            addUserObj: {
-                username: '',
-                password: '',
-                email: '',
-                phone: ''
-            },
-            addUserRules: {
-                username: [
-                    { required: true, message: "请输入账号", trigger: "blur" },
-                    { min: 5, max: 16, message: "长度在 5 到 16 个字符", trigger: "blur" }
-                ],
-                password: [
-                    { required: true, message: "请输入密码", trigger: "blur" },
-                    { min: 6, max: 16, message: "长度在 6 到 16 个字符", trigger: "blur" }
-                ],
-                email: [
-                    { required: false, validator: this.checkEmail, trigger: "blur" },
-                ],
-                phone: [
-                    { required: false, validator: this.checkPhone, trigger: "blur" },
-                ]
-            }
         };
     },
     methods: {
@@ -159,49 +116,15 @@ export default {
                 return this.$message.error(resp.data.meta.msg);
             }
             this.$message.success(resp.data.meta.msg);
+            console.log(this.addDialog);
         },
         searchUser() {
             this.queryObj.pagenum = 1;
             this.getUserList();
-        },
-        closeDialog() {
-            this.$refs.addUserForm.resetFields();
-        },
-        addUser() {
-            this.$refs.addUserForm.validate(async flag => {
-                if(flag) {
-                    const resp = await this.$http.post('users', this.addUserObj);
-                    if(resp.data.meta.status === 201){
-                        this.getUserList();
-                        this.addDialog = false;
-                        this.$message.success(resp.data.meta.msg);
-                    } else {
-                        this.$refs.addUserForm.resetFields();
-                        this.$message.error(resp.data.meta.msg);
-                    }
-                } else {
-                    this.$message.error('请按照格式填写数据');
-                }
-            });
-        },
-        checkEmail(rule, value, callback) {
-            const reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;
-            if(reg.test(value)) {
-                callback();
-            }else if(value != '') {
-                callback(new Error('请输入正确的邮箱格式!'));
-            }
-            callback();
-        },
-        checkPhone(rule, value, callback) {
-            const reg = /^(0|86|17951)?(13[0-9]|14[056789]|15[012356789]|16[6]|17[345678]|18[0-9]|19[89])[0-9]{8}$/;
-            if(reg.test(value)) {
-                callback();
-            }else if(value != '') {
-                callback(new Error('请输入正确的手机号!'));
-            }
-            callback();
         }
+    },
+    components: {
+        addDialog
     },
     created() {
         this.getUserList();
