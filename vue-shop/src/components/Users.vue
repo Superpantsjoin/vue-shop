@@ -43,8 +43,13 @@
                 </el-table-column>
                 <el-table-column label="操作">
                     <template v-slot="scope">
-                        <el-button type="primary" icon="el-icon-edit" size="mini"></el-button>
-                        <el-button type="danger" icon="el-icon-delete" size="mini"></el-button>
+                        <el-button
+                            type="primary"
+                            icon="el-icon-edit"
+                            size="mini"
+                            @click="changeInfo(scope.row)"
+                        ></el-button>
+                        <el-button type="danger" icon="el-icon-delete" size="mini" @click="deleteUserById(scope.row.id)"></el-button>
                         <el-tooltip effect="dark" content="分配角色" placement="top" :enterable="false">
                             <el-button type="warning" icon="el-icon-setting" size="mini"></el-button>
                         </el-tooltip>
@@ -65,12 +70,16 @@
         </el-card>
 
         <!-- 添加用户对话框 -->
-        <addDialog :show.sync="addDialog" @event="getUserList"></addDialog>
+        <add-dialog :show.sync="addDialog" @event="getUserList"></add-dialog>
+
+        <!-- 修改用户信息对话框 -->
+        <change-dialog :show.sync="changeDialog" @event="getUserList" :datas="changeDialogObj"></change-dialog>
     </div>
 </template>
 
 <script>
-import addDialog from './AddDialog.vue'
+import addDialog from './AddDialog.vue';
+import changeDialog from './ChangeDialog.vue';
 
 export default {
     name: 'users',
@@ -84,6 +93,8 @@ export default {
             total: 0,
             userList: [],
             addDialog: false,
+            changeDialog: false,
+            changeDialogObj: {}
         };
     },
     methods: {
@@ -116,15 +127,37 @@ export default {
                 return this.$message.error(resp.data.meta.msg);
             }
             this.$message.success(resp.data.meta.msg);
-            console.log(this.addDialog);
         },
         searchUser() {
             this.queryObj.pagenum = 1;
             this.getUserList();
+        },
+        changeInfo(userinfo) {
+            this.changeDialog = true;
+            this.changeDialogObj = userinfo;
+        },
+        async deleteUserById(id) {
+            const resp = await this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).catch((err) => err);
+            if(resp == 'confirm') {
+                const res = await this.$http.delete('users/' + id);        
+                if(res.data.meta.status === 200) {
+                    this.searchUser();
+                    this.$message.success(res.data.meta.msg);
+                } else {
+                    this.$message.error(res.data.meta.msg);
+                }
+            } else {
+                return this.$message.info('已取消删除');
+            }
         }
     },
     components: {
-        addDialog
+        addDialog,
+        changeDialog
     },
     created() {
         this.getUserList();
@@ -133,18 +166,19 @@ export default {
 </script>
 
 <style scoped>
-    .el-breadcrumb {
-        margin-bottom: 15px;
-        font-size: 12px;
-    }
-    .el-card {
-        box-shadow: 0 0 0 rgba(0, 0, 0, 0.15);
-    }
-    .el-table {
-        margin-top: 15px;
-        font-size: 12px;
-    }
-    .el-pagination {
-        margin-top: 15px;
-    }
+.el-breadcrumb {
+    margin-bottom: 15px;
+    font-size: 12px;
+}
+.el-card {
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0.15);
+}
+.el-table {
+    margin-top: 15px;
+    font-size: 12px;
+}
+.el-pagination {
+    margin-top: 15px;
+}
 </style>
+
