@@ -58,10 +58,6 @@ export default {
         closeDialog() {   
             this.$emit("update:show", false);
             this.$emit('event');  // 耗费性能
-            // const resp = await this.$http.get('users/' + this.datas.id);
-            // if(resp.data.meta.status === 200) {
-            //     this.changeUserObj = resp.data.data;
-            // }
             // this.$refs.changeUserForm.resetFields();
         },
         changeUser() {
