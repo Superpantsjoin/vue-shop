@@ -1,28 +1,28 @@
 <template>
     <el-dialog
-            title="添加用户"
-            :visible.sync="addDialog"
-            @close="closeDialog"
-            width="30%">
-            <el-form :model="addUserObj" :rules="addUserRules" ref="addUserForm" label-width="70px">
-                <el-form-item label="用户名" prop="username">
-                    <el-input v-model="addUserObj.username"></el-input>
-                </el-form-item>
-                <el-form-item label="密码" prop="password">
-                    <el-input v-model="addUserObj.password"></el-input>
-                </el-form-item>
-                <el-form-item label="邮箱" prop="email">
-                    <el-input v-model="addUserObj.email"></el-input>
-                </el-form-item>
-                <el-form-item label="电话" prop="phone">
-                    <el-input v-model="addUserObj.phone"></el-input>
-                </el-form-item>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="addDialog = false">取 消</el-button>
-                <el-button type="primary" @click="addUser">确 定</el-button>
-            </span>
-        </el-dialog>
+        title="添加用户"
+        :visible.sync="addDialog"
+        @close="closeDialog"
+        width="30%">
+        <el-form :model="addUserObj" :rules="addUserRules" ref="addUserForm" label-width="70px">
+            <el-form-item label="用户名" prop="username">
+                <el-input v-model="addUserObj.username"></el-input>
+            </el-form-item>
+            <el-form-item label="密码" prop="password">
+                <el-input v-model="addUserObj.password"></el-input>
+            </el-form-item>
+            <el-form-item label="邮箱" prop="email">
+                <el-input v-model="addUserObj.email"></el-input>
+            </el-form-item>
+            <el-form-item label="电话" prop="phone">
+                <el-input v-model="addUserObj.phone"></el-input>
+            </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+            <el-button @click="addDialog=false">取 消</el-button>
+            <el-button type="primary" @click="addUser">确 定</el-button>
+        </span>
+    </el-dialog>
 </template>
 
 <script>
@@ -65,7 +65,7 @@ export default {
     methods: {
         closeDialog() {
             this.$refs.addUserForm.resetFields();
-            this.$emit("update:show", false);
+            this.$emit('update:show', false);
         },
         addUser() {
             this.$refs.addUserForm.validate(async flag => {
@@ -95,7 +95,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-
-</style>

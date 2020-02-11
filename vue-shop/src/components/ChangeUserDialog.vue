@@ -1,25 +1,25 @@
 <template>
     <el-dialog
-            title="修改信息"
-            :visible.sync="changeDialog"
-            @close="closeDialog"
-            width="30%">
-            <el-form :model="changeUserObj" :rules="changeUserRules" ref="changeUserForm" label-width="70px">
-                <el-form-item label="用户名" prop="username">
-                    <el-input v-model="changeUserObj.username" :disabled="true"></el-input>
-                </el-form-item>
-                <el-form-item label="邮箱" prop="email">
-                    <el-input v-model="changeUserObj.email"></el-input>
-                </el-form-item>
-                <el-form-item label="电话" prop="mobile">
-                    <el-input v-model="changeUserObj.mobile"></el-input>
-                </el-form-item>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="changeDialog = false">取 消</el-button>
-                <el-button type="primary" @click="changeUser">确 定</el-button>
-            </span>
-        </el-dialog>
+        title="修改信息"
+        :visible.sync="changeDialog"
+        @close="closeDialog"
+        width="30%">
+        <el-form :model="changeUserObj" :rules="changeUserRules" ref="changeUserForm" label-width="70px">
+            <el-form-item label="用户名" prop="username">
+                <el-input v-model="changeUserObj.username" :disabled="true"></el-input>
+            </el-form-item>
+            <el-form-item label="邮箱" prop="email">
+                <el-input v-model="changeUserObj.email"></el-input>
+            </el-form-item>
+            <el-form-item label="电话" prop="mobile">
+                <el-input v-model="changeUserObj.mobile"></el-input>
+            </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+            <el-button @click="changeDialog=false">取 消</el-button>
+            <el-button type="primary" @click="changeUser">确 定</el-button>
+        </span>
+    </el-dialog>
 </template>
 
 <script>
@@ -90,7 +90,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-
-</style>

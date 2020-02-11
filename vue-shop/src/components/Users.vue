@@ -78,8 +78,8 @@
 </template>
 
 <script>
-import addDialog from './AddDialog.vue';
-import changeDialog from './ChangeDialog.vue';
+import addDialog from './AddUserDialog.vue';
+import changeDialog from './ChangeUserDialog.vue';
 
 export default {
     name: 'users',

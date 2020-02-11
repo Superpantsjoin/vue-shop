@@ -35,13 +35,12 @@ export default {
     },
     methods: {
         async getRightsList() {
-            const resp = await this.$http('rights/list');
+            const resp = await this.$http.get('rights/list');
             if(resp.data.meta.status === 200) {
                 this.rightsList = resp.data.data;
             } else {
                 this.$message.error(resp.data.meta.msg);
             }
-            console.log(this.rightsList);
         }
     },
     created() {
