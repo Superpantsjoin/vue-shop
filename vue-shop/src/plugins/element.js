@@ -24,7 +24,10 @@ import {
   Pagination,
   Dialog,
   MessageBox,
-  Tag
+  Tag,
+  Tree,
+  Select,
+  Option
 } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 // import Element from 'element-ui'
@@ -52,6 +55,9 @@ Vue.use(Tooltip)
 Vue.use(Pagination)
 Vue.use(Dialog)
 Vue.use(Tag)
+Vue.use(Tree)
+Vue.use(Select)
+Vue.use(Option)
 // Vue.use(MessageBox) // 由于已经进行全局引入 当多次引用 MessageBox 组件时会发生布局问题
 Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox.confirm

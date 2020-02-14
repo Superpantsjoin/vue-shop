@@ -55,6 +55,7 @@ export default {
                         // this.getRolesList();
                         this.$emit('event');
                         this.addDialog = false;
+                        this.$refs.addRoleForm.resetFields();
                         this.$message.success(resp.data.meta.msg);
                     } else {
                         this.$message.error(resp.data.meta.msg);

@@ -51,7 +51,7 @@
                         ></el-button>
                         <el-button type="danger" icon="el-icon-delete" size="mini" @click="deleteUserById(scope.row.id)"></el-button>
                         <el-tooltip effect="dark" content="分配角色" placement="top" :enterable="false">
-                            <el-button type="warning" icon="el-icon-setting" size="mini"></el-button>
+                            <el-button type="warning" icon="el-icon-setting" size="mini" @click="setInfo(scope.row)"></el-button>
                         </el-tooltip>
                     </template>
                 </el-table-column>
@@ -74,12 +74,21 @@
 
         <!-- 修改用户信息对话框 -->
         <change-dialog :show.sync="changeDialog" @event="getUserList" :datas="changeDialogObj"></change-dialog>
+
+        <!-- 分配角色对话框 -->
+        <set-dialog 
+            :show.sync="setDialog" 
+            @event="getUserList" 
+            :datas="setDialogObj" 
+            :setDialogList="setDialogList"
+        ></set-dialog>
     </div>
 </template>
 
 <script>
 import addDialog from './AddUserDialog.vue';
 import changeDialog from './ChangeUserDialog.vue';
+import setDialog from './SetRoleDialog.vue'
 
 export default {
     name: 'users',
@@ -94,7 +103,10 @@ export default {
             userList: [],
             addDialog: false,
             changeDialog: false,
-            changeDialogObj: {}
+            changeDialogObj: {},
+            setDialog: false,
+            setDialogObj: {},
+            setDialogList: []
         };
     },
     methods: {
@@ -102,11 +114,11 @@ export default {
             const resp = await this.$http.get('users', {
                 params: this.queryObj
             });
-            if (resp.data.meta.status !== 200) {
-                return this.$message.error(resp.data.meta.msg);
-            } else {
+            if (resp.data.meta.status === 200) {
                 this.total = resp.data.data.total;
                 this.userList = resp.data.data.users;
+            } else {
+                this.$message.error(resp.data.meta.msg);
             }
         },
         handleSizeChange(newSize) {
@@ -119,14 +131,13 @@ export default {
         },
         async userStateChanged(userinfo) {
             // console.log(userinfo.mg_state);
-            const resp = await this.$http.put(
-                `users/${userinfo.id}/state/${userinfo.mg_state}`
-            );
-            if (resp.data.meta.status !== 200) {
+            const resp = await this.$http.put("users/" + userinfo.id + "/state/" + userinfo.mg_state);
+            if (resp.data.meta.status === 200) {
+                this.$message.success(resp.data.meta.msg);
+            } else {
                 userinfo.mg_state = !userinfo.mg_state;
-                return this.$message.error(resp.data.meta.msg);
+                this.$message.error(resp.data.meta.msg);
             }
-            this.$message.success(resp.data.meta.msg);
         },
         searchUser() {
             this.queryObj.pagenum = 1;
@@ -151,13 +162,24 @@ export default {
                     this.$message.error(res.data.meta.msg);
                 }
             } else {
-                return this.$message.info('已取消删除');
+                this.$message.info('已取消删除');
+            }
+        },
+        async setInfo(userinfo) {
+            this.setDialog = true;
+            this.setDialogObj = userinfo;
+            const resp = await this.$http.get('roles');
+            if(resp.data.meta.status === 200) {
+                this.setDialogList = resp.data.data;
+            } else {
+                this.$message.error(resp.data.meta.msg);
             }
         }
     },
     components: {
         addDialog,
-        changeDialog
+        changeDialog,
+        setDialog
     },
     created() {
         this.getUserList();
