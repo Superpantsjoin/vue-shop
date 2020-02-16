@@ -53,6 +53,10 @@ export default {
         }
     },
     methods: {
+        closeDialog() {
+            this.$emit('update:show', false);
+            this.$emit('event');
+        },
         changeRole() {
             this.$refs.changeRoleForm.validate(async flag => {
                 if(flag) {
@@ -60,9 +64,9 @@ export default {
                         roleName: this.changeRoleObj.roleName,
                         roleDesc: this.changeRoleObj.roleDesc
                     });
+                    this.changeDialog = false;
                     if(resp.data.meta.status === 200) {
                         this.$emit('event');
-                        this.changeDialog = false;
                         this.$message.success(resp.data.meta.msg);
                     } else {
                         this.$message.error(resp.data.meta.msg);
@@ -71,10 +75,6 @@ export default {
                     this.$message.error('请按照格式填写数据');
                 }
             })
-        },
-        closeDialog() {
-            this.$emit('update:show', false);
-            this.$emit('event');
         }
     },
     watch: {

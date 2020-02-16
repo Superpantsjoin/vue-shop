@@ -4,7 +4,18 @@
 
 <script>
 export default {
-    name: 'reports'
+    name: 'reports',
+    data() {
+        return {
+            
+        }
+    },
+    methods: {
+
+    },
+    created() {
+        
+    }
 }
 </script>
 

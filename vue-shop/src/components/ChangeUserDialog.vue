@@ -67,9 +67,9 @@ export default {
                         email: this.changeUserObj.email,
                         mobile: this.changeUserObj.mobile
                     });
+                    this.changeDialog = false;
                     if(resp.data.meta.status === 200) {
                         this.$emit('event');
-                        this.changeDialog = false;
                         this.$message.success(resp.data.meta.msg);
                     }
                 } else {

@@ -64,7 +64,7 @@
                         </el-row>
                     </template>
                 </el-table-column>
-                <el-table-column type="index"></el-table-column>
+                <el-table-column type="index" label="#"></el-table-column>
                 <el-table-column label="角色名称" prop="roleName"></el-table-column>
                 <el-table-column label="角色描述" prop="roleDesc"></el-table-column>
                 <el-table-column label="操作">
@@ -163,7 +163,7 @@ export default {
             }
         },
         async removeRightById(role, rightsId) {
-            const resp = await this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+            const resp = await this.$confirm('此操作将永久删除该权限, 是否继续?', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 type: 'warning'

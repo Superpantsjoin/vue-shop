@@ -71,13 +71,12 @@ export default {
             this.$refs.addUserForm.validate(async flag => {
                 if(flag) {
                     const resp = await this.$http.post('users', this.addUserObj);
+                    this.addDialog = false;
                     if(resp.data.meta.status === 201){
                         // this.getUserList(); 通过$emit触发获取列表
                         this.$emit('event');
-                        this.addDialog = false;
                         this.$message.success(resp.data.meta.msg);
                     } else {
-                        this.$refs.addUserForm.resetFields();
                         this.$message.error(resp.data.meta.msg);
                     }
                 } else {

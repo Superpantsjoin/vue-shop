@@ -47,15 +47,18 @@ export default {
         }
     },
     methods: {
+        closeDialog() {
+            this.$refs.addRoleForm.resetFields();
+            this.$emit('update:show', false);
+        },
         async addRole() {
             this.$refs.addRoleForm.validate(async flag => {
-                if(flag) {
+                if(flag) {       
                     const resp = await this.$http.post('roles', this.addRoleObj);
+                    this.addDialog = false;
                     if(resp.data.meta.status === 201) {
                         // this.getRolesList();
                         this.$emit('event');
-                        this.addDialog = false;
-                        this.$refs.addRoleForm.resetFields();
                         this.$message.success(resp.data.meta.msg);
                     } else {
                         this.$message.error(resp.data.meta.msg);
@@ -64,9 +67,6 @@ export default {
                     this.$message.error('请按照格式填写数据');
                 }
             })
-        },
-        closeDialog() {
-            this.$emit('update:show', false);
         }
     },
     watch: {

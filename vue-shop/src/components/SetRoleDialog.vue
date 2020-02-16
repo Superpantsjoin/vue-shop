@@ -9,12 +9,12 @@
             <p>当前的角色 : {{ setRoleObj.role_name }}</p>
             <p>分配新角色 : 
                 <el-select v-model="selectId" placeholder="请选择">
-                <el-option
-                    v-for="item in setRolesList"
-                    :key="item.id"
-                    :label="item.roleName"
-                    :value="item.id">
-                    </el-option>
+                    <el-option
+                        v-for="item in setRolesList"
+                        :key="item.id"
+                        :label="item.roleName"
+                        :value="item.id"
+                    ></el-option>
                 </el-select>
             </p>
         </div>
@@ -55,11 +55,12 @@ export default {
             this.selectId = '';
         },
         async setRole() {
-            this.setDialog = false;
             const resp = await this.$http.put('users/' + this.setRoleObj.id + '/role', {
                 rid: this.selectId
             });
+            this.setDialog = false;
             if(resp.data.meta.status === 200) {
+                this.$message.succeess(resp.data.meta.msg);
                 this.$emit('event');
             } else {
                 this.$message.error(resp.data.meta.msg);
