@@ -32,12 +32,10 @@ export default {
             },
             changeRoleRules: {
                 roleName: [
-                    { required: true, message: '请输入角色名称', trigger: 'blur' },
-                    { min: 1, message: '请输入角色名称', trigger: 'blur' }
+                    { required: true, message: '请输入角色名称', trigger: 'blur' }
                 ],
                 roleDesc: [
-                    { required: true, message: '请输入角色描述', trigger: 'blur' },
-                    { min: 1, message: '请输入角色描述', trigger: 'blur' }
+                    { required: true, message: '请输入角色描述', trigger: 'blur' }
                 ]
             }
         }
@@ -55,6 +53,7 @@ export default {
     methods: {
         closeDialog() {
             this.$emit('update:show', false);
+            // this.$refs.changeRoleForm.resetFields();
             this.$emit('event');
         },
         changeRole() {

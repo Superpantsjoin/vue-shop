@@ -57,8 +57,8 @@ export default {
     methods: {
         closeDialog() {   
             this.$emit("update:show", false);
-            this.$emit('event');  // 耗费性能
             // this.$refs.changeUserForm.resetFields();
+            this.$emit('event');  // 耗费性能
         },
         changeUser() {
             this.$refs.changeUserForm.validate(async flag => {

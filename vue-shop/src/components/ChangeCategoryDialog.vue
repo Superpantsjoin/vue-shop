@@ -24,8 +24,7 @@ export default {
             changeObj: this.datas,
             changeCategoryRules: {
                 cat_name: [
-                    { required: true, message: "请输入分类名称", trigger: "blur" },
-                    { min: 1, message: "请输入分类名称", trigger: "blur" }
+                    { required: true, message: "请输入分类名称", trigger: "blur" }
                 ]
             },
         }
