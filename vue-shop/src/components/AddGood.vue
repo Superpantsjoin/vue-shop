@@ -32,7 +32,7 @@
 
             <!-- 编辑区域 -->
             <el-form :model="addGoodObj" :rules="addGoodRules" ref="addGoodForm" label-width="100px" label-position="top">
-                <el-tabs tab-position="left" v-model="activeName" :before-leave="handleLeave" @tab-click="handleClick">
+                <el-tabs tab-position="left" v-model="activeName" :before-leave="handleLeave">
                     <el-tab-pane label="基本信息" name="0">
                         <el-form-item label="商品名称" prop="goods_name">
                             <el-input v-model="addGoodObj.goods_name"></el-input>
@@ -78,7 +78,10 @@
                             <el-button size="small" type="primary">点击上传</el-button>
                         </el-upload>
                     </el-tab-pane>
-                    <el-tab-pane label="商品内容" name="4">商品内容</el-tab-pane>
+                    <el-tab-pane label="商品内容" name="4">
+                        <quill-editor v-model="addGoodObj.goods_introduce"></quill-editor>
+                        <el-button type="primary" @click="addGood">添加商品</el-button>
+                    </el-tab-pane>
                 </el-tabs>
             </el-form>
         </el-card>
@@ -101,10 +104,10 @@ export default {
             activeName: 0,
             addGoodObj: {
                 goods_name: '',
-                goods_cat: this.selectIds,
-                goods_price: 0,
-                goods_number: 0,
-                goods_weight: 0,
+                goods_cat: '',
+                goods_price: '',
+                goods_number: '',
+                goods_weight: '',
                 goods_introduce: '',
                 pics: [],
                 attrs: []
@@ -123,7 +126,7 @@ export default {
                     { required: true, message: '请填写商品重量', trigger: 'blur' }
                 ],
                 goods_cat: [
-                    { required: true, trigger: 'blur' }
+                    { required: true, message: '请选择商品分类', trigger: 'blur' }
                 ]
             },
             categoriesList: [],
@@ -183,18 +186,22 @@ export default {
             if(this.selectIds.length !== 3) {
                 this.$message.info('当前为非第三级分类');
                 this.selectIds = [];
+            } else {
+                this.addGoodObj.goods_cat = this.selectIds;
+                this.getCategoriesManyProps();
+                this.getCategoriesOnlyProps();
             }
         },
         handleLeave(go, from) {
             if(!from && from != '0') {
                 return ;
             }
-        //    console.log(go);
-        //    console.log(from);
-        },
-        handleClick() {
-            this.getCategoriesManyProps();
-            this.getCategoriesOnlyProps();
+            if(go == '1' || go == '2') {
+                if(this.selectIds.length != 3) {
+                    this.$message.info('请选择商品分类');
+                    return false;
+                }
+            }
         },
         handlePreview(file) {
             this.picUrl = file.response.data.url;
@@ -210,6 +217,36 @@ export default {
         handleSuccess(resp) {
             const picPath = { pic: resp.data.tmp_path };
             this.addGoodObj.pics.push(picPath);
+        },
+        addGood() {
+            this.$refs.addGoodForm.validate(async flag => {
+                if(flag) {
+                    this.addGoodObj.goods_cat = this.selectIds.join(',');
+                    this.manyPropList.forEach(ele => {
+                        const newInfo = {
+                            attr_id: ele.attr_id,
+                            attr_value: ele.attr_vals.join(',')
+                        };
+                        this.addGoodObj.attrs.push(newInfo);
+                    });
+                    this.onlyPropList.forEach(ele => {
+                        const newInfo = {
+                            attr_id: ele.attr_id,
+                            attr_value: ele.attr_vals
+                        };
+                        this.addGoodObj.attrs.push(newInfo);
+                    });
+                    const resp = await this.$http.post('goods', this.addGoodObj);
+                    if(resp.data.meta.status === 201) {
+                        this.$message.success(resp.data.meta.msg);
+                        this.$router.push('/home/goods');
+                    } else {
+                        this.$message.error(resp.data.meta.msg);
+                    }
+                } else {
+                    this.$message.info('请填写基本信息');
+                }
+            })
         }
     },
     created() {
@@ -234,5 +271,8 @@ export default {
 }
 .pic{
     width: 100%;
+}
+.el-button{
+    margin-top: 15px;
 }
 </style>

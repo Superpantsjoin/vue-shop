@@ -12,3 +12,7 @@ html, body, #app{
 .el-tabs__item{
     height: 60px !important;
 }
+
+.ql-editor{
+    min-height: 350px !important;
+}

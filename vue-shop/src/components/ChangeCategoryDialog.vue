@@ -1,6 +1,6 @@
 <template>
     <el-dialog
-        title="提示"
+        title="编辑分类"
         :visible.sync="changeDialog"
         width="30%"
         @close="closeDialog">

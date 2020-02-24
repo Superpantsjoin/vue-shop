@@ -43,6 +43,7 @@
                             type="primary"
                             icon="el-icon-edit"
                             size="mini"
+                            @click="changeInfo(scope.row)"
                         ></el-button>
                         <el-button 
                             type="danger" 
@@ -65,10 +66,14 @@
                 :total="total">
             </el-pagination>
         </el-card>
+
+        <!-- 编辑商品对话框 -->
+        <change-dialog :show.sync="changeDialog" @event="getGoodsList" :datas="changeObj"></change-dialog>
     </div>
 </template>
 
 <script>
+import changeDialog from './ChangeGoodDialog.vue'
 export default {
     name: 'goods',
     data() {
@@ -79,7 +84,9 @@ export default {
                 pagesize: 10
             },
             total: 0,
-            goodsList: []
+            goodsList: [],
+            changeDialog: false,
+            changeObj: {}
         }
     },
     methods: {
@@ -126,7 +133,14 @@ export default {
         },
         addGood() {
             this.$router.push('goods/addGoodPage');
+        },
+        changeInfo(goodinfo) {
+            this.changeDialog = true;
+            this.changeObj = goodinfo;
         }
+    },
+    components: {
+        changeDialog
     },
     created() {
         this.getGoodsList();
