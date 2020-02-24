@@ -49,7 +49,12 @@
                             size="mini"
                             @click="changeInfo(scope.row)"
                         ></el-button>
-                        <el-button type="danger" icon="el-icon-delete" size="mini" @click="deleteUserById(scope.row.id)"></el-button>
+                        <el-button 
+                            type="danger" 
+                            icon="el-icon-delete" 
+                            size="mini" 
+                            @click="deleteUserById(scope.row.id)"
+                        ></el-button>
                         <el-tooltip effect="dark" content="分配角色" placement="top" :enterable="false">
                             <el-button type="warning" icon="el-icon-setting" size="mini" @click="setInfo(scope.row)"></el-button>
                         </el-tooltip>

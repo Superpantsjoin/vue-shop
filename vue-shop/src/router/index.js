@@ -61,6 +61,11 @@ const routes = [
         path: 'reports',
         name: 'reports',
         component: () => import('../components/Reports.vue')
+      },
+      {
+        path: 'goods/addGoodPage',
+        name: 'addGoodPage',
+        component: () => import('../components/AddGood.vue')
       }
     ],
     redirect: '/home/welcome'

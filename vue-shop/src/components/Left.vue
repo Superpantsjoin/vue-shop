@@ -2,20 +2,21 @@
     <div>
         <div class="toggle-button" @click="toggleMenu">|||</div>
         <el-menu
-        class="el-menu-vertical-demo"
-        background-color="#2b2c2e"
-        text-color="#fff"
-        :unique-opened="true"
-        :router="true"
-        :collapse="isDisplay"
-        :collapse-transition="false"
-        active-text-color="#409eff">
+            class="el-menu-vertical-demo"
+            background-color="#2b2c2e"
+            text-color="#fff"
+            :unique-opened="true"
+            :router="true"
+            :collapse="isDisplay"
+            :collapse-transition="false"
+            active-text-color="#409eff"
+        >
             <el-submenu :index="item.id + ''" v-for="item in menuList" :key="item.id">
                 <template slot="title">
                     <i :class="iconObj[item.order]"></i>
                     <span>{{ item.authName }}</span>
                 </template>
-                <el-menu-item :index="subItem.path" v-for="subItem in item.children" :key="subItem.id">
+                <el-menu-item :index="'/home/' + subItem.path" v-for="subItem in item.children" :key="subItem.id">
                     <template slot="title">
                     <i class="el-icon-menu"></i>
                     <span>{{ subItem.authName }}</span>
