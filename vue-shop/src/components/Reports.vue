@@ -51,7 +51,7 @@ export default {
                     {
                         type: 'category',
                         boundaryGap: false,
-                        data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+                        data: ['2020-2-23', '2020-2-24', '2020-2-25', '2020-2-26', '2020-2-27', '2020-2-28']
                     }
                 ],
                 yAxis: [
@@ -116,11 +116,12 @@ export default {
         const resp = await this.$http.get('reports/type/1');
         if(resp.data.meta.status === 200) {
             option = resp.data.data;
+            this.option.yAxis = option.yAxis;
+            this.option.legend = option.legend;
+            this.option.series = option.series;
         } else {
             this.$message.error(resp.data.meta.msg);
         }
-
-        console.log(option);
 
         myChart.setOption(this.option);
     }
