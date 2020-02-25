@@ -26,7 +26,7 @@ Vue.component('tree-table', TreeTable)
 Vue.use(VueQuillEditor)
 
 Vue.filter('dateFormat', function (date) {
-  const dt = new Date(date)
+  const dt = new Date(date * 1000)
   const y = dt.getFullYear()
   const m = ('0' + (dt.getMonth() + 1)).slice(-2)
   const d = ('0' + dt.getDate()).slice(-2)

@@ -81,7 +81,7 @@ export default {
             queryObj: {
                 query: '',
                 pagenum: 1,
-                pagesize: 10
+                pagesize: 5
             },
             total: 0,
             goodsList: [],
@@ -159,5 +159,8 @@ export default {
 .el-table {
     margin-top: 15px;
     font-size: 12px;
+}
+.el-pagination {
+    margin-top: 15px;
 }
 </style>
