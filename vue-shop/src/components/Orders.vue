@@ -96,7 +96,7 @@
         <el-dialog
             title="物流信息"
             :visible.sync="showDialog"
-            @close="changeDialogClose"
+            @close="showDialog=false"
             width="50%">
             <el-timeline>
                 <el-timeline-item
